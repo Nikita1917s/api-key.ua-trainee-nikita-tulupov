@@ -2,14 +2,6 @@
   "name": "api-trellonikita",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "serverless": "^2.69.0"
-  },
   "eslintConfig": {
     "root": true,
     "env": {
@@ -28,5 +20,8 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "devDependencies": {
+    "serverless-offline": "^8.3.1"
+  }
 }
