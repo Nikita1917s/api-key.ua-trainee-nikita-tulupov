@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm i
+      - npm i -g serverless  
+      - pip install --upgrade pip
+      - pip install --upgrade awscli
+  post_build:
+    commands:
+      - echo PostBuild Phase
+      - sls deploy -s dev -v
