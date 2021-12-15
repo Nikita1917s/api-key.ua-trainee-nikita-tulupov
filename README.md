@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Usage and Start
 
 serverless offline 
