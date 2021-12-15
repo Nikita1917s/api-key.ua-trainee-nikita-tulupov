@@ -10,4 +10,4 @@ phases:
   post_build:
     commands:
       - echo PostBuild Phase
-      - sls deploy -s dev -v
+      - sls deploy -s dev --verbose
