@@ -71,7 +71,7 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: DashboardId
-            AttributeType: HASH 
+            KeyType: HASH 
         BillingMode: PAY_PER_REQUEST
         ProvisionedThroughput:
           ReadCapacityUnits: 1
