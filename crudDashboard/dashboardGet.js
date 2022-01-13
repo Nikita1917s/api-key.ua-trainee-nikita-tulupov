@@ -8,7 +8,7 @@ const dashboardGet = async (event) => {
     let statusCode = 0;
 
     const params = {
-        TableName: 'nikita-trello-db',
+        TableName: 'nikita-trello-dashboards',
     };
 
     try {

@@ -10,7 +10,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  region: eu-west-2
+  region: eu-east-2
   lambdaHashingVersion: 20201221
   httpApi:
     cors: true
