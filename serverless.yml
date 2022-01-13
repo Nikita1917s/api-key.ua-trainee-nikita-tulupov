@@ -60,19 +60,19 @@ functions:
   #         cors: true
 
 
-resources:
-  Resources:
-    MyDynamoDbTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.tableName}
-        AttributeDefinitions:
-          - AttributeName: DashboardId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: DashboardId
-            KeyType: HASH 
-        BillingMode: PAY_PER_REQUEST
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+# resources:
+#   Resources:
+#     MyDynamoDbTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: ${self:custom.tableName}
+#         AttributeDefinitions:
+#           - AttributeName: DashboardId
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: DashboardId
+#             KeyType: HASH 
+#         BillingMode: PAY_PER_REQUEST
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1
