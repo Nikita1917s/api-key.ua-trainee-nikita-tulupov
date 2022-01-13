@@ -6,10 +6,24 @@ frameworkVersion: '2 || 3'
 
 plugins:
   - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs12.x
+  region: eu-west-2
   lambdaHashingVersion: 20201221
+  httpApi:
+    cors: true
+  environment:
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: '*'
+
+custom:
+  tableName: nikita-trello-dashboards
 
 functions:
   params:
@@ -18,3 +32,47 @@ functions:
       - httpApi:
           method: GET
           path: /trello-page
+  dashboardPut:
+    handler: crudDashboard/dashboardPut.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /dashboardPut
+  dashboardGet:
+    handler: crudDashboard/dashboardGet.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /dashboardGet
+  # getColumn:
+  #   handler: lambdas/endpoints/columns/getColumns.handler
+  #   events:
+  #     - httpApi:
+  #         method: GET
+  #         path: /get-columns/{ID}  
+  #         cors: true
+  # postColumn:
+  #   handler: lambdas/endpoints/columns/postColumns.handler
+  #   events:
+  #     - httpApi:
+  #         method: POST
+  #         path: /post-columns/{ID}
+  #         cors: true
+
+
+resources:
+  Resources:
+    MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: DashboardId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: DashboardId
+            AttributeType: HASH 
+        BillingMode: PAY_PER_REQUEST
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

@@ -1,6 +1,9 @@
 # package directories
 node_modules
 jspm_packages
+crudColumns
+crudUsers
+lambdas
 
 # Serverless directories
 .serverless

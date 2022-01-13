@@ -1,6 +1,6 @@
 ## Usage and Start 
 
-serverless offline 
+serverless offline
 
 ### Deployment
 
