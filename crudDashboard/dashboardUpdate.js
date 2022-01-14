@@ -9,19 +9,20 @@ const dashboardUpdate = async (event) => {
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashboardId, columns } = event.body;
+    const { dashboardId, dashboardName, columns } = event.body;
 
     const params = {
         TableName: 'nikita-trello-dashboards',
         Key: {
             dashboardId: dashboardId
         },
-        UpdateExpression: "SET #col = :n",
+        UpdateExpression: "SET #col = :n, dashboardName = :p",
         ExpressionAttributeNames: {
             "#col": "columns"
         },
         ExpressionAttributeValues: {
-            ":n": columns
+            ":n": columns,
+            "p:": dashboardName
         },
         ReturnValues: "UPDATED_NEW"
     };

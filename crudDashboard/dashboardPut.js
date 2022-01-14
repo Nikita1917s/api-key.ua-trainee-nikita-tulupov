@@ -10,12 +10,13 @@ const dashboardPut = async (event) => {
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashboardId, columns } = event.body;
+    const { dashboardId, dashboardName, columns } = event.body;
 
     const params = {
         TableName: 'nikita-trello-dashboards',
         Item: {
             dashboardId: dashboardId,
+            dashboardName: dashboardName,
             columns: columns
         }
     };
