@@ -1,5 +1,7 @@
 'use strict';
 const AWS = require('aws-sdk');
+const middy = require("@middy/core");
+const httpJsonBodyParser = require("@middy/http-json-body-parser");
 
 const dashboardUpdate = async (event) => {
     const DynamoDB = new AWS.DynamoDB.DocumentClient();
@@ -7,7 +9,7 @@ const dashboardUpdate = async (event) => {
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashboardId, columns } = JSON.parse(event.body);
+    const { dashboardId, columns } = event.body;
 
     const params = {
         TableName: 'nikita-trello-dashboards',
@@ -45,5 +47,5 @@ const dashboardUpdate = async (event) => {
 };
 
 module.exports = {
-    handler: dashboardUpdate
+    handler: middy(dashboardUpdate).use(httpJsonBodyParser())
 };

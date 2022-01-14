@@ -1,5 +1,7 @@
 'use strict';
 const AWS = require('aws-sdk');
+const middy = require("@middy/core");
+const httpJsonBodyParser = require("@middy/http-json-body-parser");
 
 const dashboardDelete = async (event) => {
     const DynamoDB = new AWS.DynamoDB.DocumentClient();
@@ -7,8 +9,7 @@ const dashboardDelete = async (event) => {
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashboardId } = JSON.parse(event.body);
-
+    const { dashboardId } = event.body;
 
     const params = {
         TableName: 'nikita-trello-dashboards',
@@ -37,5 +38,5 @@ const dashboardDelete = async (event) => {
 };
 
 module.exports = {
-    handler: dashboardDelete
+    handler: middy(dashboardDelete).use(httpJsonBodyParser())
 };
