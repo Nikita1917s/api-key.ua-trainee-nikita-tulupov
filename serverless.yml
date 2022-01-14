@@ -50,4 +50,3 @@ functions:
       - httpApi:
           method: DELETE
           path: /dashboardDelete
-

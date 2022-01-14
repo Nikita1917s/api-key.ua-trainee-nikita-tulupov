@@ -23,7 +23,8 @@ const dashboardGet = async (event) => {
     const response = {
         statusCode: statusCode,
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "access-control-allow-origin": "*"
         },
         body: responseBody
     };

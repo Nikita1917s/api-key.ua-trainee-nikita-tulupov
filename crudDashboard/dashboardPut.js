@@ -1,5 +1,7 @@
 'use strict';
 const AWS = require('aws-sdk');
+const middy = require("@middy/core");
+const httpJsonBodyParser = require("@middy/http-json-body-parser");
 
 const dashboardPut = async (event) => {
 
@@ -8,12 +10,13 @@ const dashboardPut = async (event) => {
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashboardId, columns } = JSON.parse(event.body);
+    const { dashboardId, dashboardName, columns } = event.body;
 
     const params = {
         TableName: 'nikita-trello-dashboards',
         Item: {
             dashboardId: dashboardId,
+            dashboardName: dashboardName,
             columns: columns
         }
     };
@@ -30,7 +33,8 @@ const dashboardPut = async (event) => {
     const response = {
         statusCode: statusCode,
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "access-control-allow-origin": "*"
         },
         body: JSON.stringify(params)
     };
@@ -38,5 +42,5 @@ const dashboardPut = async (event) => {
 };
 
 module.exports = {
-    handler: dashboardPut
+    handler: middy(dashboardPut).use(httpJsonBodyParser())
 }
