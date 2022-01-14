@@ -1,23 +1,24 @@
 'use strict';
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
-export async function handler(event, context) {
-    const documentClient = new AWS.DynamoDB.DocumentClient();
+const dashboardDelete = async (event) => {
+    const DynamoDB = new AWS.DynamoDB.DocumentClient();
 
     let responseBody = '';
     let statusCode = 0;
 
-    const { userId } = event.pathParameters
+    const { dashboardId } = JSON.parse(event.body);
+
 
     const params = {
-        TableName: 'nikita-trello-db',
+        TableName: 'nikita-trello-dashboards',
         Key: {
-            userId: userId
+            dashboardId: dashboardId
         }
     };
 
     try {
-        const data = await documentClient.delete(params).promise();
+        const data = await DynamoDB.delete(params).promise();
         responseBody = JSON.stringify(data);
         statusCode = 204;
     } catch (err) {
@@ -33,4 +34,8 @@ export async function handler(event, context) {
     };
 
     return response;
+};
+
+module.exports = {
+    handler: dashboardDelete
 };

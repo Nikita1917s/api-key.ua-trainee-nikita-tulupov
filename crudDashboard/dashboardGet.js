@@ -1,5 +1,5 @@
 'use strict';
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
 const dashboardGet = async (event) => {
     const DynamoDB = new AWS.DynamoDB.DocumentClient();
@@ -33,4 +33,4 @@ const dashboardGet = async (event) => {
 
 module.exports = {
     handler: dashboardGet
-}
+};

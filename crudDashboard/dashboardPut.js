@@ -1,10 +1,7 @@
 'use strict';
-// import AWS from 'aws-sdk';
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
-// export async function handler(event)
-// const dashboardPut = async (event) => {
-    export async function handler(event) {
+const dashboardPut = async (event) => {
 
     const DynamoDB = new AWS.DynamoDB.DocumentClient();
 
@@ -16,13 +13,9 @@ const AWS = require('aws-sdk')
     const params = {
         TableName: 'nikita-trello-dashboards',
         Item: {
-            dashboardId: '123',
-            columns: [{id:1, cards: [{card: 'new'}]}]
+            dashboardId: dashboardId,
+            columns: columns
         }
-        // Item: {
-        //     dashboardId: dashboardId,
-        //     columns: columns
-        // }
     };
 
     try {
@@ -31,7 +24,7 @@ const AWS = require('aws-sdk')
         statusCode = 201;
     } catch (err) {
         statusCode = 403;
-        responseBody = `Unable to put items: ${err}`
+        responseBody = `Unable to put items: ${err}`;
     };
 
     const response = {
@@ -39,8 +32,11 @@ const AWS = require('aws-sdk')
         headers: {
             "Content-Type": "application/json"
         },
-        body: responseBody
+        body: JSON.stringify(params)
     };
-
     return response;
 };
+
+module.exports = {
+    handler: dashboardPut
+}

@@ -1,32 +1,35 @@
 'use strict';
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
-export async function handler(event, context) {
-    const documentClient = new AWS.DynamoDB.DocumentClient();
+const dashboardUpdate = async (event) => {
+    const DynamoDB = new AWS.DynamoDB.DocumentClient();
 
     let responseBody = '';
     let statusCode = 0;
 
-    const { dashBoardId, columns } = JSON.parse(event.body);
+    const { dashboardId, columns } = JSON.parse(event.body);
 
     const params = {
-        TableName: 'nikita-trello-db',
+        TableName: 'nikita-trello-dashboards',
         Key: {
-            dashBoardId: dashBoardId
+            dashboardId: dashboardId
         },
-        UpdateExpression: 'set columns = :c',
+        UpdateExpression: "SET #col = :n",
+        ExpressionAttributeNames: {
+            "#col": "columns"
+        },
         ExpressionAttributeValues: {
-            ":c": columns
+            ":n": columns
         },
-        ReturnValues: 'UPDATED_NEW'
+        ReturnValues: "UPDATED_NEW"
     };
 
     try {
-        const data = await documentClient.update(params).promise();
+        const data = await DynamoDB.update(params).promise();
         responseBody = JSON.stringify(data);
         statusCode = 204;
     } catch (err) {
-        responseBody = `Unable to updat e items: ${err}`
+        responseBody = `Unable to update items: ${err}`
         statusCode = 403;
     };
 
@@ -39,4 +42,8 @@ export async function handler(event, context) {
     };
 
     return response;
+};
+
+module.exports = {
+    handler: dashboardUpdate
 };

@@ -26,53 +26,28 @@ custom:
   tableName: nikita-trello-dashboards
 
 functions:
-  params:
-    handler: handler.hello
-    events:
-      - httpApi:
-          method: GET
-          path: /trello-page
-  dashboardPut:
-    handler: crudDashboard/dashboardPut.handler
-    events:
-      - httpApi:
-          method: POST
-          path: /dashboardPut
   dashboardGet:
     handler: crudDashboard/dashboardGet.handler
     events:
       - httpApi:
           method: GET
           path: /dashboardGet
-  # getColumn:
-  #   handler: lambdas/endpoints/columns/getColumns.handler
-  #   events:
-  #     - httpApi:
-  #         method: GET
-  #         path: /get-columns/{ID}  
-  #         cors: true
-  # postColumn:
-  #   handler: lambdas/endpoints/columns/postColumns.handler
-  #   events:
-  #     - httpApi:
-  #         method: POST
-  #         path: /post-columns/{ID}
-  #         cors: true
+  dashboardPut:
+    handler: crudDashboard/dashboardPut.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /dashboardPut
+  dashboardUpdate:
+    handler: crudDashboard/dashboardUpdate.handler
+    events:
+      - httpApi:
+          method: PUT
+          path: /dashboardUpdate
+  dashboardDelete:
+    handler: crudDashboard/dashboardDelete.handler
+    events:
+      - httpApi:
+          method: DELETE
+          path: /dashboardDelete
 
-
-# resources:
-#   Resources:
-#     MyDynamoDbTable:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: ${self:custom.tableName}
-#         AttributeDefinitions:
-#           - AttributeName: DashboardId
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: DashboardId
-#             KeyType: HASH 
-#         BillingMode: PAY_PER_REQUEST
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 1
-#           WriteCapacityUnits: 1
