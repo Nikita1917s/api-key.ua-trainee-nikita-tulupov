@@ -22,7 +22,7 @@ const dashboardUpdate = async (event) => {
         },
         ExpressionAttributeValues: {
             ":n": columns,
-            "p:": dashboardName
+            ":p": dashboardName
         },
         ReturnValues: "UPDATED_NEW"
     };
