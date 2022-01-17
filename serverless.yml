@@ -42,7 +42,7 @@ functions:
     handler: crudDashboard/dashboardUpdate.handler
     events:
       - httpApi:
-          method: PUT
+          method: PATCH
           path: /dashboardUpdate
   dashboardDelete:
     handler: crudDashboard/dashboardDelete.handler
