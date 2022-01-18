@@ -32,6 +32,12 @@ functions:
       - httpApi:
           method: GET
           path: /dashboardGet
+  dashboardGetItem:
+    handler: crudDashboard/dashboardGetItem.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /dashboardGetItem/{dashboardId}
   dashboardPut:
     handler: crudDashboard/dashboardPut.handler
     events:
