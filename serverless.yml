@@ -14,12 +14,16 @@ provider:
   lambdaHashingVersion: 20201221
   httpApi:
     cors: true
+  apiGateway:
+    binaryMediaTypes:
+      - 'multipart/form-data'
   environment:
     tableName: ${self:custom.tableName}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - dynamodb:*
+        - s3:*
       Resource: '*'
 
 custom:
@@ -36,7 +40,7 @@ functions:
     handler: crudDashboard/dashboardGetItem.handler
     events:
       - httpApi:
-          method: GET
+          method: GET 
           path: /dashboardGetItem/{dashboardId}
   dashboardPut:
     handler: crudDashboard/dashboardPut.handler
@@ -56,3 +60,9 @@ functions:
       - httpApi:
           method: DELETE
           path: /dashboardDelete
+  filePost:
+    handler: crudDashboard/filePost.handler
+    events:
+      - httpApi:
+          method: POST
+          path: /filePost
