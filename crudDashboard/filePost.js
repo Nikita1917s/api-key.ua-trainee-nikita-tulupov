@@ -9,8 +9,13 @@ const filePost = async (event) => {
     let responseBody = '';
     let url = ''
     let statusCode = 0;
+    const allowedMimes = ['image/jpeg', 'image/JPEG', 'image/png', 'image/PNG', 'image/jpg', 'image/JPG', 'image/gif', 'image/GIF',];
 
-    const { fileId, file } = event.body;
+    const { fileId, file, fileType } = event.body;
+
+    if (!allowedMimes.includes(fileType)) {
+        return console.log(`File type is not allowed ${fileType} \n You can upload next file types: ${allowedMimes.join(' ')}`);
+    }
     let newFile = file;
 
     if (newFile.substr(0, 7) === 'base64,') {
