@@ -13,15 +13,10 @@ const filePost = async (event) => {
 
     const { fileId, file, fileType } = event.body;
 
-    if (!allowedMimes.includes(fileType)) {
-        return console.log(`File type is not allowed ${fileType} \n You can upload next file types: ${allowedMimes.join(' ')}`);
-    }
     let newFile = file;
-
     if (newFile.substr(0, 7) === 'base64,') {
         newFile = newFile.substr(7, newFile.length);
     }
-
     const buffer = Buffer.from(newFile, 'base64');
 
     const params = {
@@ -30,15 +25,20 @@ const filePost = async (event) => {
         Body: buffer,
     };
 
-    try {
-        const data = await s3.upload(params).promise();
-        responseBody = JSON.stringify(data);
-        statusCode = 201;
-        url = `https://trello-nikita-files.s3.us-east-2.amazonaws.com/${fileId}`;
-    } catch (err) {
+    if (!allowedMimes.includes(fileType)) {
+        try {
+            const data = await s3.upload(params).promise();
+            responseBody = `https://trello-nikita-files.s3.us-east-2.amazonaws.com/${fileId}`;
+            statusCode = 201;
+            url = data;
+        } catch (err) {
+            statusCode = 403;
+            responseBody = `Unable to put items: ${err}`;
+        };
+    } else {
         statusCode = 403;
-        responseBody = `Unable to put items: ${err}`;
-    };
+        responseBody = `File type is not allowed ${fileType} \n You can upload next file types: ${allowedMimes.join(' ')}`;
+    }
 
     const response = {
         statusCode: statusCode,
@@ -46,7 +46,7 @@ const filePost = async (event) => {
             "Content-Type": "multipart/form-data",
             "access-control-allow-origin": "*"
         },
-        body: url
+        body: responseBody
     };
     return response;
 };
