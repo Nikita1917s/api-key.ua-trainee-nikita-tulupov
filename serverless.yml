@@ -66,3 +66,9 @@ functions:
       - httpApi:
           method: POST
           path: /filePost
+  fileDelete:
+    handler: crudDashboard/fileDelete.handler
+    events:
+      - httpApi:
+          method: DELETE
+          path: /fileDelete
