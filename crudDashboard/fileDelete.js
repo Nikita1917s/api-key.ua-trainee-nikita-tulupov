@@ -20,8 +20,6 @@ const fileDelete = async (event) => {
         }
     };
 
-    console.log(111, event.body)
-
         try {
             const data = await s3.deleteObjects(params).promise();
             responseBody = JSON.stringify(data);
