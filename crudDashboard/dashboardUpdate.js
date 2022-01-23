@@ -30,7 +30,7 @@ const dashboardUpdate = async (event) => {
     try {
         const data = await DynamoDB.update(params).promise();
         responseBody = JSON.stringify(data);
-        statusCode = 204;
+        statusCode = 200;
     } catch (err) {
         responseBody = `Unable to update items: ${err}`
         statusCode = 403;

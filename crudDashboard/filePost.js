@@ -25,7 +25,7 @@ const filePost = async (event) => {
         Body: buffer,
     };
 
-    if (!allowedMimes.includes(fileType)) {
+    if (allowedMimes.includes(fileType)) {
         try {
             const data = await s3.upload(params).promise();
             responseBody = `https://trello-nikita-files.s3.us-east-2.amazonaws.com/${fileId}`;
@@ -37,7 +37,7 @@ const filePost = async (event) => {
         };
     } else {
         statusCode = 403;
-        responseBody = `File type is not allowed ${fileType} \n You can upload next file types: ${allowedMimes.join(' ')}`;
+        responseBody = `File type is not allowed ${fileType} \nYou can upload next file types: ${allowedMimes.join(' ')}`;
     }
 
     const response = {
